@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+{% block content %}
 <h1>My name is {{ first_name }}</h1>
 <p>This is my first paragraph</p>
 <p>Ohhh my Gooddd </p>
@@ -6,13 +8,15 @@
 
 {% for p in favorite_pizza%}
 
-    {% if p == 20 %}
-        {{p+100}} {{ " is integer value" }}<br>
-    {% else %}
-    {{ p }}<br>
-    {% endif %}
+{% if p == 20 %}
+{{p+100}} {{ " is integer value" }}<br>
+{% else %}
+{{ p }}<br>
+{% endif %}
 
 {% endfor %}
 
 
-{{ favorite_pizza|reverse }}
+{{ stuff }}
+
+{% endblock %}
