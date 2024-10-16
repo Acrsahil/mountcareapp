@@ -2,12 +2,17 @@ from flask import Flask, render_template
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
+from wtforms import  DateField
 
 # Create Flask instance
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'mysecretkey'
 
 #Create a form class
+class NamerForm(FlaskForm):
+    name = StringField("Whats Your Name",validators=[DataRequired()])
+    date_of_birth = DateField("Date of Birth",format="%Y-%m-%D",validators=[DataRequired()])
+    submit = SubmitField('Submit')
 
 # Create a route decorator
 @app.route('/')
@@ -29,7 +34,23 @@ def page_not_found(e):
 def page_not_found(e):
     return render_template("500.html"),500
 
+#Create Name Page
+@app.route('/name',methods=['GET','POST'])
+def name():
+    name = None
+    form = NamerForm()
+    # Validate Form
+    if form.validate_on_submit():
+        name = form.name.data
+        data_of_birth = form.name.date_of_birth
+        form.name.data = ''
+        form.name.date_of_birth.data = ''
+    return render_template('name.html',
+                           name = name,
+                           form = form,
+                           date_of_birth=form.date_of_birth)
 
 
 if __name__ == "__main__":
     app.run(debug=True)
+
