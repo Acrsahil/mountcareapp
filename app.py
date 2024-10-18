@@ -10,9 +10,9 @@ app.config['SECRET_KEY'] = 'mysecretkey'
 
 #Create a form class
 class NamerForm(FlaskForm):
-    name = StringField("Whats Your Name",validators=[DataRequired()])
-    date_of_birth = DateField("Date of Birth",format="%Y-%m-%D",validators=[DataRequired()])
+    name = StringField("Whats Your Blame",validators=[DataRequired()])
     submit = SubmitField('Submit')
+    date = DateField('What is the Date',format='%Y-%m-%d')
 
 # Create a route decorator
 @app.route('/')
@@ -38,17 +38,19 @@ def page_not_found(e):
 @app.route('/name',methods=['GET','POST'])
 def name():
     name = None
+    date = None
     form = NamerForm()
     # Validate Form
     if form.validate_on_submit():
         name = form.name.data
-        data_of_birth = form.name.date_of_birth
+        date = form.date.data
         form.name.data = ''
-        form.name.date_of_birth.data = ''
+        form.date.data = ''
     return render_template('name.html',
-                           name = name,
-                           form = form,
-                           date_of_birth=form.date_of_birth)
+                           name=name,
+                           date=date,
+                           form=form
+    )
 
 
 if __name__ == "__main__":

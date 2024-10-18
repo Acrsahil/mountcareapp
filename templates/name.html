@@ -1,22 +1,21 @@
 {% extends 'base.html' %}
 {% block content %}
-{% if name == none: %}
-<h1>What's Your Name?</h1>
-<br>
-<form method="POST">
-        {{ form.hidden_tag() }}
-        {{ form.name.label(
-                class="form-label"
-        ) }}
-        {{ form.name( class="form-control"
-        ) }}
-        <br>
-        {{ form.submit(class="btn btn-secondary"
-        ) }}
+{% if name %}
+<h1>Hello, {{ name }}!</h1>
+<h2>You picked the date: {{ date }}</h2>
+{% else %}
+<form method="POST" action="">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.name.label }}<br>
+        {{ form.name(size=32) }}
+    </p>
+    <p>
+        {{ form.date.label }}<br>
+        {{ form.date() }}
+    </p>
+    <p>{{ form.submit() }}</p>
 </form>
-{%else %}
-<h1>Hello {{ name }}!! and your date is {{date_of_birth}}</h1>
 
 {% endif %}
-
 {% endblock %}
